@@ -13,6 +13,11 @@ class Schoolkid(models.Model):
     def __str__(self):
         return f'{self.full_name} {self.year_of_study}{self.group_letter}'
 
+    def fix_marks(self):
+        bad_marks = Mark.objects.filter(schoolkid=self, points__in=[2, 3])
+        for mark in bad_marks:
+            mark.update(points=5)
+
 
 class Teacher(models.Model):
     """Учитель."""
